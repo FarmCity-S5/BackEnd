@@ -14,16 +14,18 @@ import java.util.List;
 @RestController
 @RequestMapping("terrains")
 public class TerrainController {
+    
     @PostMapping
     public  void save(
             @RequestParam float longitude,
             @RequestParam float latitude,
             @RequestParam int nombre_parcelle,
-            @RequestParam int etat
+            @RequestParam int etat,
+            @RequestParam String description
     )throws SQLException {
         ConnectPost cp = new ConnectPost();
         try (Connection con = cp.ConnectionBase()) {
-            Terrain.addTerrain(con, longitude, latitude, nombre_parcelle,etat);
+            Terrain.addTerrain(con, longitude, latitude, nombre_parcelle,etat,description);
         }
     }
 

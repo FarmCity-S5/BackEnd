@@ -36,4 +36,9 @@ public ResponseEntity<List<Culture>> getAllCultures()throws SQLException{
     }
     return ResponseEntity.ok(cultures);
 }
+
+    @GetMapping("/Hello")
+    public String testHello(){
+        return("Hello World");
+    }
 }

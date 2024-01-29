@@ -94,4 +94,21 @@ public class Terrain {
             e.printStackTrace();
         }
     }
+    public static boolean Validation(Connection connection, int id_terrain, int etat) {
+        String sql = "UPDATE Terrain SET etat = 1 WHERE id_terrain = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setInt(1, id_terrain);
+            statement.setInt(2, etat);
+
+            int rowsAffected = statement.executeUpdate();
+
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 }

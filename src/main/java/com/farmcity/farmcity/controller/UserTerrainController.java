@@ -1,7 +1,7 @@
 package com.farmcity.farmcity.controller;
 
-import com.farmcity.farmcity.model.Culture;
 import com.farmcity.farmcity.model.Terrain;
+import com.farmcity.farmcity.model.UserTerrain;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,29 +11,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("terrains")
-public class TerrainController {
+@RequestMapping("userterrains")
+public class UserTerrainController {
     @PostMapping
     public  void save(
-            @RequestParam float longitude,
-            @RequestParam float latitude,
-            @RequestParam int nombre_parcelle,
-            @RequestParam int etat
+            @RequestParam int id_user,
+            @RequestParam int id_terrain
+
     )throws SQLException {
         ConnectPost cp = new ConnectPost();
         try (Connection con = cp.ConnectionBase()) {
-            Terrain.addTerrain(con, longitude, latitude, nombre_parcelle,etat);
+            UserTerrain.addUser(con, id_user,id_terrain);
         }
     }
 
     @GetMapping
-    public ResponseEntity<List<Terrain>> getAllTerrains()throws SQLException{
+    public ResponseEntity<List<UserTerrain>> getAllTerrains()throws SQLException{
         ConnectPost cp = new ConnectPost();
-        List<Terrain> terrains = new ArrayList<>();
+        List<UserTerrain> userTerrains = new ArrayList<>();
         try(Connection con = cp.ConnectionBase()) {
-            terrains = Terrain.getAllTerrains(con);
+            userTerrains = UserTerrain.getUserTerrains(con);
         }
-        return ResponseEntity.ok(terrains);
+        return ResponseEntity.ok(userTerrains);
     }
-
 }

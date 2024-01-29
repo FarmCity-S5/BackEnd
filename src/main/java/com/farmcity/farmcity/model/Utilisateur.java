@@ -2,16 +2,22 @@ package com.farmcity.farmcity.model;
 
 import com.farmcity.farmcity.controller.ConnectPost;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Utilisateur {
+    int id;
     String name_user;
     String pass_word;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public String getName_user() {
         return name_user;
@@ -28,35 +34,45 @@ public class Utilisateur {
     public void setPass_word(String pass_word) {
         this.pass_word = pass_word;
     }
-    public Utilisateur(String name_user,String pass_word){
+    public Utilisateur(int id, String name_user,String pass_word){
+        setId(id);
         setName_user(name_user);
         setPass_word(pass_word);
     }
 
-    public List<Utilisateur> getAllUser() {
-        List<Utilisateur> utilisateurs = new ArrayList<>();
-
-        try{
-            ConnectPost c = new ConnectPost();
-            Connection con = c.ConnectionBase();
-            String sql = "SELECT * FROM UserFarm";
+        public static Utilisateur login(Connection con, String name_user, String pass_word) throws Exception {
+            List<Utilisateur> utilisateurs = new ArrayList<>();
+            String sql = " SELECT * FROM UserFarm where name_user = ? and pass_word = ? ";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery(); {
+            preparedStatement.setString(1, name_user);
+            preparedStatement.setString(2, pass_word);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String username = resultSet.getString("name_user");
+                int id = resultSet.getInt("id");
+                String password  = resultSet.getString("pass_word");
 
-                while (resultSet.next()) {
-                    String name_user = resultSet.getString("name_user");
-                    String passWord = resultSet.getString("pass_word");
-
-                    Utilisateur utilisateur = new Utilisateur(name_user,pass_word);
-                    utilisateurs.add(utilisateur);
-                }
+                Utilisateur utilisateur = new Utilisateur(id, username, password);
+                utilisateurs.add(utilisateur);
             }
+            if(utilisateurs.size() <= 0)
+                return null;
+            else return utilisateurs.get(0);
+        }
+    public static void AddClientUser (Connection con,String name_user,String pass_word) {
+        try  {
+            String sql = "INSERT INTO UserFarm (name_user,pass_word) VALUES (?, ?)";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1,name_user);
+            preparedStatement.setString(2,pass_word);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return utilisateurs;
     }
 
 
+
+
 }
+

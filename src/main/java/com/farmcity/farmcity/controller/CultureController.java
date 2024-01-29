@@ -1,7 +1,6 @@
 package com.farmcity.farmcity.controller;
 
 import com.farmcity.farmcity.model.Culture;
-import com.farmcity.farmcity.model.Parcelle;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

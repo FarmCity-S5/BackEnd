@@ -57,4 +57,30 @@ create table CultureValableParcelle(
                                        id_culture int references Culture(id)
 );
 
-select * from Parcelle where id_parcelle='?' and id_culture='?';
+Select Parcelle.id,
+       Parcelle.id_terrain,
+       Parcelle.rendement,
+       Culture.name_culture
+from Parcelle
+        join Terrain on Parcelle.id_terrain = Terrain.id
+        join Culture on Terrain.id = Culture.id;
+
+SELECT * FROM UserFarm ;
+SELECT C.duration, CP.date_plantation FROM CultureParcelle CP
+                       JOIN Culture C ON CP.id_culture = C.id
+                       WHERE CP.id_parcelle = ?;
+
+select P.id_terrain, C.id id_culture, C.name_culture nom_culture, count(C.id) nombre_culture
+from cultureparcelle
+join Culture C on cultureparcelle.id_culture = C.id
+join Parcelle P on cultureparcelle.id_parcelle = P.id
+
+group by id_terrain, C.id;
+
+select * from cultureparcelle
+join Culture C on C.id = cultureparcelle.id_culture;
+
+update Terrain set_etat = 1 where id_terrain = ?;
+UPDATE Terrain
+SET etat = 1
+               WHERE id= ?;

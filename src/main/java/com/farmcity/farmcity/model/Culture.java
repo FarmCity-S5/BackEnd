@@ -81,5 +81,53 @@ public class Culture{
         }
     }
 
+    public static double calculerTempsRestant(Connection connection, int idParcelle) throws SQLException {
+        String query = "SELECT C.duration, CP.date_plantation FROM CultureParcelle CP " +
+                "JOIN Culture C ON CP.id_culture = C.id " +
+                "WHERE CP.id_parcelle = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, idParcelle);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                Time dureeEnMinutes = resultSet.getTime("duration");
+                Timestamp datePlantation = resultSet.getTimestamp("date_plantation");
+                double pourcentageRestant = calculerPourcentageRestant(timeToMinute(dureeEnMinutes), datePlantation);
+
+                return pourcentageRestant;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int timeToMinute(Time duration){
+        String duree = duration.toString();
+        String[] durees = duree.split(":");
+        return Integer.parseInt(durees[0]) * 60 + Integer.parseInt(durees[1]);
+    }
+
+    /*public static void main(String[] args) throws Exception{
+        ConnectPost cp = new ConnectPost();
+        Connection con = cp.ConnectionBase();
+        double test = calculerTempsRestant(con, 5);
+        System.out.println(test);
+    }*/
+    private static double calculerPourcentageRestant(int dureeEnMinute, Timestamp datePlantation) {
+        long tempsEcoule = calculerTempsEcouleEnMinutes(datePlantation);
+        double pourcentageRestant = (100.0 * tempsEcoule) / dureeEnMinute;
+        if(pourcentageRestant > 100)
+            pourcentageRestant = 100;
+        // double pourcentageRestant = 100.0 - ((tempsEcouleEnMinutes / duree) * 100.0);
+        return pourcentageRestant;
+    }
+    private static long calculerTempsEcouleEnMinutes(Timestamp datePlantation) {
+        long maintenant = System.currentTimeMillis();
+        long datePlantationMillis = datePlantation.getTime();
+        long differenceMillis = maintenant - datePlantationMillis;
+        return differenceMillis / (60 * 1000);
+    }
+
 
 }

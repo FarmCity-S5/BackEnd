@@ -26,7 +26,7 @@ public class CultureController {
             }
 }
 
-@GetMapping
+@GetMapping("/all")
 public ResponseEntity<List<Culture>> getAllCultures()throws SQLException{
     ConnectPost cp = new ConnectPost();
     List<Culture> cultures = new ArrayList<>();

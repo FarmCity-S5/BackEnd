@@ -64,4 +64,24 @@ create table HistoriqueTerrain(
 );
 
 
+insert into UserFarm(name_user,pass_word) values ('Mitia','mitiaRak04');
+insert into UserFarm(name_user,pass_word) values ('Fanilo','FalconX');
+insert into UserFarm(name_user,pass_word) values ('Nekena','dimbyNekena');
 
+
+insert into Terrain(longitude,latitude,nombre_parcelle,etat,descriptionTerrain) values ('-18.777192499999998','46.85432800000001',3,0,'Terrain au centre de la ville');
+
+insert into UserTerrain(id_user,id_terrain) values (2,1);
+
+INSERT INTO Parcelle (id_terrain, rendement, superficie)
+VALUES
+    (1, '10.6', 500),
+    (1, '9.6', 300),
+    (1, '5.7', 200);
+
+insert into Culture(name_culture,prix,rendementM2,duration) 
+VALUES
+    ('Laitue',50,6,CAST('00:00:10' AS TIME)),
+    ('Salade',20,9,CAST('00:00:06' AS TIME)),
+    ('Tomate',10,12,CAST('00:00:08' AS TIME)),
+    ('Pomme de terre',40,20,CAST('00:00:20' AS TIME));

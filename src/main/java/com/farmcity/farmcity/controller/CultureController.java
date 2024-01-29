@@ -35,9 +35,19 @@ public ResponseEntity<List<Culture>> getAllCultures()throws SQLException{
     }
     return ResponseEntity.ok(cultures);
 }
+    @GetMapping("/pourcentageculture")
+    public double calculerTempsRestant()throws SQLException{
+        ConnectPost cp = new ConnectPost();
+        Connection con = cp.ConnectionBase();
+        double test = Culture.calculerTempsRestant(con, 5);
+        return test;
+    }
 
     @GetMapping("/Hello")
     public String testHello(){
         return("Hello World");
     }
+
+
+
 }

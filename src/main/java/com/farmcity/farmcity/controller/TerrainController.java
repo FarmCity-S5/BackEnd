@@ -38,4 +38,14 @@ public class TerrainController {
         return ResponseEntity.ok(terrains);
     }
 
+    @GetMapping("/validation")
+    public Boolean validation() throws SQLException{
+
+        ConnectPost cp = new ConnectPost();
+        Connection con = cp.ConnectionBase();
+        Boolean val = Terrain.Validation(con , 1,1);
+        return val;
+    }
+
+
 }

@@ -32,37 +32,52 @@ public class CultureParcelle {
     public void setDate_plantation(Timestamp date_plantation) {
         this.date_plantation = date_plantation;
     }
-    public CultureParcelle(int id_parcelle,int id_culture,Timestamp date_plantation){
+
+    public CultureParcelle(int id_parcelle, int id_culture, Timestamp date_plantation) {
         setId_parcelle(id_parcelle);
         setId_culture(id_culture);
         setDate_plantation(date_plantation);
     }
-   /* public static List<CultureParcelle> statCultureParcelle(Connection con) {
-        List<CultureParcelle> cultureParcelles = new ArrayList<>();
+    public static List<CultureParcelle> getAllCulturesParcelles(Connection con) {
+        List<CultureParcelle> cultureparcelles = new ArrayList<>();
 
         try{
-            String sql = "select P.id_terrain, C.id id_culture, C.name_culture nom_culture, count(C.id) nombre_culture\n" +
-                    "from cultureparcelle\n" +
-                    "join Culture C on cultureparcelle.id_culture = C.id\n" +
-                    "join Parcelle P on cultureparcelle.id_parcelle = P.id\n" +
-                    "\n" +
-                    "group by id_terrain, C.id;";
-            try (PreparedStatement preparedStatement = con.prepareStatement(sql);
-                 ResultSet resultSet = preparedStatement.executeQuery()) {
+            String sql = "SELECT * FROM CultureParcelle";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-                while (resultSet.next()) {
-                    int id_terrain = resultSet.getInt("id_terrain");
-                    int id_culture = resultSet.getInt("id_culture");
-                    String nom_culture = resultSet.getString("nom_culture");
-                    int nombre_culture = resultSet.getInt("nombre_culture");
+            while (resultSet.next()) {
+                int id_parcelle = resultSet.getInt("id_parcelle");
+                int id_culture = resultSet.getInt("id_culture");
+                Timestamp date_plantation = resultSet.getTimestamp("date_plantation");
 
-                    CultureParcelle cultureParcelle = new CultureParcelle(id_terrain,id_culture,nom_culture,nombre_culture );
-                    cultureParcelles.add(cultureParcelle);
-                }
+                CultureParcelle cultureParcelle = new CultureParcelle(id_parcelle, id_culture, date_plantation);
+                cultureparcelles.add(cultureParcelle);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return cultureParcelles;
-    }*/
+
+        return cultureparcelles;
+    }
+
+    public  static void AddCultureParcelle(Connection con, int id_parcelle,int id_culture,Timestamp date_plantation) {
+        try  {
+            String sql = "INSERT INTO CultureParcelle (id_parcelle, id_culture, date_plantation) VALUES (?, ?, ?)";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, id_parcelle);
+            preparedStatement.setInt(2, id_culture);
+            preparedStatement.setTimestamp(3, date_plantation);
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 }

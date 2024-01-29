@@ -76,7 +76,7 @@ public class HistoriqueTerrain {
         return historiqueTerrains;
     }
 
-    public static void addTerrain(Connection con, int id_vendeur,int id_acheteur,Date date_achat ) {
+    public static void addHistoriqueTerrain(Connection con, int id_vendeur,int id_acheteur,Date date_achat ) {
         try  {
 
             String sql = "INSERT INTO HistoriqueTerrain (id_vendeur,id_acheteur,date_achat) VALUES (?, ?, ?)";

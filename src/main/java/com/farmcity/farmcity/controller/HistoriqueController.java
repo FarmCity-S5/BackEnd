@@ -23,7 +23,7 @@ public class HistoriqueController {
     ) throws SQLException {
         ConnectPost cp = new ConnectPost();
         try (Connection con = cp.ConnectionBase()) {
-            HistoriqueTerrain.addTerrain(con, id_vendeur, id_acheteur, date_achat);
+            HistoriqueTerrain.addHistoriqueTerrain(con, id_vendeur, id_acheteur, date_achat);
         }
     }
 

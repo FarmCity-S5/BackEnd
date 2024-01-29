@@ -108,12 +108,12 @@ public class Culture{
         return Integer.parseInt(durees[0]) * 60 + Integer.parseInt(durees[1]);
     }
 
-    /*public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception{
         ConnectPost cp = new ConnectPost();
         Connection con = cp.ConnectionBase();
         double test = calculerTempsRestant(con, 5);
         System.out.println(test);
-    }*/
+    }
     private static double calculerPourcentageRestant(int dureeEnMinute, Timestamp datePlantation) {
         long tempsEcoule = calculerTempsEcouleEnMinutes(datePlantation);
         double pourcentageRestant = (100.0 * tempsEcoule) / dureeEnMinute;

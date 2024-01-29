@@ -55,7 +55,7 @@ create table CultureValableParcelle(
     id_parcelle int references Parcelle(id),
     id_culture int references Culture(id)
 );
-
+select * from parcelle;
 create table HistoriqueTerrain(
     id serial primary key ,
     id_vendeur int references UserFarm(id),

@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("terrains")
+@CrossOrigin(origins = "*",allowedHeaders = "*",methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE,RequestMethod.OPTIONS})
 public class TerrainController {
     
     @PostMapping

@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("userterrains")
+@CrossOrigin(origins = "*",allowedHeaders = "*",methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE,RequestMethod.OPTIONS})
 public class UserTerrainController {
     @PostMapping
     public  void save(

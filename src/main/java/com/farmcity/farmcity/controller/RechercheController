@@ -1,0 +1,26 @@
+package com.farmcity.farmcity.controller;
+
+import com.farmcity.farmcity.model.Recherche;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+@RequestMapping("recherches")
+public class RechercheController {
+
+    @GetMapping("recherchemulti")
+    public ResponseEntity<List<Recherche>> multirecherches(@RequestParam int id_culture,@RequestParam int id_parcelle,@RequestParam int id_user)throws SQLException {
+        ConnectPost cp = new ConnectPost();
+        List<Recherche> recherches= new ArrayList<>();
+        try(Connection con = cp.ConnectionBase()) {
+            recherches = Recherche.multirecherches(con,id_culture,id_parcelle,id_user);
+        }
+        return ResponseEntity.ok(recherches);
+    }
+
+}
